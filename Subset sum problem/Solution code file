@@ -1,0 +1,109 @@
+// Link :- https://practice.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1
+
+// code 
+
+
+//{ Driver Code Starts
+//Initial template for C++
+
+#include<bits/stdc++.h> 
+using namespace std; 
+
+// } Driver Code Ends
+//User function template for C++
+
+class Solution{   
+public:
+    /******************************************************************
+     ******************   Time limit exceeds   ************************
+     ******************************************************************/
+    
+    
+    // bool func(vector<int>& arr, int targetSum , int sum , int index)
+    // {
+    //     if(sum==targetSum ) return true;
+    //     if(index==arr.size()) return false;
+        
+    //     // choices
+        
+    //     if(sum+arr[index] <= targetSum)
+    //     {
+    //         if(func(arr,sum+arr[index],targetSum,index+1)) return true;
+    //     }
+    //     if(func(arr,sum,targetSum,index+1)) return true;
+        
+    //     return false;
+    // }
+    // bool isSubsetSum(vector<int>& arr, int targetSum ){
+    //     // code here 
+    //     return func(arr,targetSum,0,0);
+    // }
+    
+    
+    /******************************************************************
+     *****************  Using Bottom up approach   ********************
+     ******************************************************************/
+     
+    // Time wasting
+    
+    
+    /******************************************************************
+     **********************  Using top down   *************************
+     ******************************************************************/
+    
+    
+    bool isSubsetSum(vector<int>& arr, int targetSum ){
+        bool t[arr.size()+1][targetSum+1];
+        memset(t,false,sizeof(t));
+        
+        // initialisation 
+        
+        for(int i=0,j=0;i<arr.size()+1;i++)
+        {
+            t[i][j]=true;
+        }
+        
+        // choices
+        
+        for(int i=1;i<arr.size()+1;i++)
+        {
+            for(int j=1;j<targetSum+1;j++)
+            {
+                // ye maan lo ki ab tak koi element dala hi nhi h 
+                if(arr[i-1]<=j)
+                {
+                    t[i][j]=(t[i-1][j]  ||  t[i-1][j-arr[i-1]]);
+                }
+                else 
+                {
+                    t[i][j]=t[i-1][j];
+                }
+            }
+        }
+        return t[arr.size()][targetSum];
+    }
+    
+};
+
+//{ Driver Code Starts.
+int main() 
+{ 
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int N, sum;
+        cin >> N;
+        vector<int> arr(N);
+        for(int i = 0; i < N; i++){
+            cin >> arr[i];
+        }
+        cin >> sum;
+        
+        Solution ob;
+        cout << ob.isSubsetSum(arr, sum) << endl;
+    }
+    return 0; 
+} 
+
+// } Driver Code Ends
